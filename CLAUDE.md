@@ -14,6 +14,13 @@ Analysis pipeline for **lifetime photometry (FLIPR)** data.
 Organization: **gordon-laboratory**
 Repo: `gordon-laboratory/analysis-flipr`
 
+Git user for this repo is `gordon-laboratory`. Before pushing, ensure this is the
+active `gh` account (`gh auth status`). If git picks up the wrong credential, run:
+```bash
+gh auth setup-git
+git push origin master
+```
+
 ## Data layout
 
 ```
