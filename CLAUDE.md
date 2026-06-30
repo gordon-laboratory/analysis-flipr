@@ -14,10 +14,36 @@ Analysis pipeline for **lifetime photometry (FLIPR)** data.
 Organization: **gordon-laboratory**
 Repo: `gordon-laboratory/analysis-flipr`
 
+## Data layout
+
+```
+data/sessions/<session>/data_flipr/   ← all preprocessed outputs
+```
+
+Session name is derived from the filename stem by stripping the trailing `_###` run number
+(e.g. `2024_04_21_acz02_001.iFLiP2` → session `2024_04_21_acz02`).
+
+All output CSVs have **no header row**. Column layout is documented in README.md.
+
+## Functions
+
+`functions/` contains shared Python modules ported from `source/iFLiP2_Code for Users/`.
+Do not add ad-hoc MPET or lifetime calculations — always use these functions.
+
+| Module | Exports |
+|---|---|
+| `read_iflip2.py` | `read_iflip2(filepath)` → dict with `data`, `header`, `LTTime`, `sampleTime`, `marks` |
+| `calculate_mpet.py` | `calculate_mpet(data, header, spc_range, t0, ...)` → `(mpet, corrected_data)` |
+| `fit_lifetime.py` | `fit_single_exp(lt_time, intensity, ...)`, `fit_double_exp(lt_time, intensity, ...)` |
+
+## Preprocessing scripts
+
+`scripts_preprocessing/01_tidy_and_preprocess.py` — single entry point for all preprocessing.
+Takes a `.iFLiP2` file; requires `--spc_range` and `--t0`. See README for full argument list.
+
 ## Conventions
 - Python scripts; prefer `pandas`, `numpy`, `matplotlib`/`seaborn` for core work
 - Preprocessing scripts should be runnable standalone with clear CLI arguments
-- Output filenames should include the script name and a timestamp or version tag
 - Keep `data/` out of version control (add `.gitignore` entry); commit `data_example/` only
 
 ## Working with Claude
